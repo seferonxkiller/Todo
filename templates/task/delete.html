@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <a href="/" type="submit" class="btn btn-primary">Yoq</a>
+        <a href="?ha=ha" type="submit" class="btn btn-danger">Ha</a>
+    </form>
+{% endblock %}

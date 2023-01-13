@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container text-center mt-4">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        {#                        <input type="text" class="form-control" placeholder="New task..."#}
+                        {#                               aria-label="Recipient's username" aria-describedby="button-addon2">#}
+                    </div>
+                </form>
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <a href="{% url 'task:create' %}" class="btn btn-outline-primary mr-6" type="submit"
+                       id="button-addon2">+ Add task</a>
+                    <a href="/?f=Todo" type="button" class="btn btn-warning">To do</a>
+                    <a href="/?f=In progress" type="button" class="btn btn-primary">In progress</a>
+                    <a href="/?f=Done" type="button" class="btn btn-success">Done</a>
+                    <a href="/?f=Cancelled" type="button" class="btn btn-danger">Cancelled</a>
+                    <a href="/" type="button" class="btn btn-warning">All</a>
+
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            Dropdown
+                        </button>
+                        <ul class="dropdown-menu p-3">
+                            <li><input type="datetime-local" name="start_date mt-2" class="form-control"></li>
+                            <li><input type="datetime-local" name="end_date mt-2" class="form-control"></li>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+                <ul class="list-group">
+                    {#                    <li class="mt-3 list-group-item d-flex justify-content-between align-items-center">#}
+                    {#                        ><a href="#">A second list item</a#}
+                    {#                        <span class="">#}
+                    {#  #}
+                    {#                        </span>#}
+                    {#                    </li>#}
+                    {% for task in tasks %}
+                        <div class="todo-card mt-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    {{ task.status }}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ task.title }}</h5>
+                                    <p class="card-text">{{ task.content }}</p>
+                                    <a href="/edit/{{ task.id }}/" class="btn btn-primary">Edit</a>
+                                    <a href="/delete/{{ task.id }}/" class="btn btn-danger">Delete</a>
+                                </div>
+                                <div class="card-footer text-muted d-flex">
+                                    {{ task.created_at }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
