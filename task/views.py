@@ -68,7 +68,7 @@ def delete(request, pk):
 
 def login_view(request):
     if not request.user.is_anonymous:
-        return redirect('article:list')
+        return redirect('task:index')
     form = AuthenticationForm(request)
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -79,7 +79,7 @@ def login_view(request):
             messages.success(request, "Muvaffaqiyatli royhatdan otdingiz")
             if next_path:
                 return redirect(next_path)
-            return redirect('article:list')
+            return redirect('task:index')
     ctx = {
         'form': form
     }
@@ -88,22 +88,22 @@ def login_view(request):
 
 def logout_view(request):
     if not request.user.is_authenticated:
-        return redirect('auth:login')
+        return redirect('task:login')
     if request.method == 'POST':
         messages.success(request, "Muvaffaqiyatli royxatdan chiqdingiz")
         logout(request)
-        return redirect('auth:login')
+        return redirect('task:login')
     return render(request, 'task/logout.html')
 
 
 def register_view(request):
     if request.user.is_authenticated:
-        return redirect('article:list')
+        return redirect('task:login')
     form = UserCreationForm(request.POST or None)
     if form.is_valid():
         form.save()
         messages.success(request, "Muvaffaqiyatli royhatdan otdingiz")
-        return redirect('auth:login')
+        return redirect('task:login')
     context = {
         'form': form
     }
